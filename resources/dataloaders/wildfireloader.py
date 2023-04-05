@@ -103,13 +103,13 @@ class WildFireDataLoader:
         return [name[0] for name in tns]
 
     @_with_database
-    def extract_colun_names_from_table(self, table_name: str, limit: int = 100):
+    def extract_colun_names_from_table(self, table_name: str, limit: int = 100) -> List[str]:
         self.cursor.execute(f"SELECT * FROM {table_name} LIMIT {limit}")
         columns = [description[0] for description in self.cursor.description]
         return columns
 
     @dataframe_wrapper
-    def to_pandas_df(self, datetime_cols: Optional[List[str]] = None):
+    def to_pandas_df(self, datetime_cols: Optional[List[str]] = None) -> pd.DataFrame:
         if datetime_cols:
             logging.info("Processing pandas datetimes, this might take a few minutes...")
             for col in datetime_cols:
@@ -121,4 +121,7 @@ class WildFireDataLoader:
 
     @dataframe_wrapper
     def save_dataframe_as_parquet(self):
+        pass
+
+    def load_dataframe_from_parquet(self):
         pass
