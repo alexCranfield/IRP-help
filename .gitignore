@@ -1,3 +1,9 @@
+### Personal ignores
+# data dir, too big to sync with github
+data/
+*.DS_Store
+
+### GitHub reccomneded ignores
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
