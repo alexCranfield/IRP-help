@@ -120,16 +120,18 @@ class WildFireDataLoader:
         return self._df
 
     @dataframe_wrapper
-    def save_dataframe_as_parquet(self, file_name:str = "export.parquet.gzip", save_path:Optional[Union[str,Path]]=None) -> None:
+    def save_dataframe_as_parquet(
+        self, file_name: str = "export.parquet.gzip", save_path: Optional[Union[str, Path]] = None
+    ) -> None:
         """Save the loaded dataframe as a parquet file.
 
         Args:
             file_name (str, optional): Filename for saving. Defaults to "export.parquet.gzip".
             save_path (Optional[Union[str,Path]], optional): Path for saving. If not provided the `datadir` is used instead..
-        """        
+        """
         if save_path is None:
             save_path = self.datadir.parents[0]
-        
+
         output_file = Path(save_path) / file_name
-        logging.info("Saving dataframe to: %s", output_file)     
-        self._df.to_parquet(output_file, compression='gzip') 
+        logging.info("Saving dataframe to: %s", output_file)
+        self._df.to_parquet(output_file, compression="gzip")
