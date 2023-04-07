@@ -33,7 +33,7 @@ class WildFireDataLoader:
                 npartitions=None,
                 dask_threshold=1,
                 scheduler="processes",
-                progress_bar=True,
+                progress_bar=False,
                 progress_bar_desc=None,
                 allow_dask_on_strings=False,
                 force_parallel=False,
@@ -120,8 +120,16 @@ class WildFireDataLoader:
         return self._df
 
     @dataframe_wrapper
-    def save_dataframe_as_parquet(self):
-        pass
+    def save_dataframe_as_parquet(self, file_name:str = "export.parquet.gzip", save_path:Optional[Union[str,Path]]=None) -> None:
+        """Save the loaded dataframe as a parquet file.
 
-    def load_dataframe_from_parquet(self):
-        pass
+        Args:
+            file_name (str, optional): Filename for saving. Defaults to "export.parquet.gzip".
+            save_path (Optional[Union[str,Path]], optional): Path for saving. If not provided the `datadir` is used instead..
+        """        
+        if save_path is None:
+            save_path = self.datadir.parents[0]
+        
+        output_file = Path(save_path) / file_name
+        logging.info("Saving dataframe to: %s", output_file)     
+        self._df.to_parquet(output_file, compression='gzip') 
